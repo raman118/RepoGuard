@@ -1,0 +1,54 @@
+[project]
+name = "repoguard"
+version = "0.1.0"
+description = "Evidence-backed repository readiness and controlled remediation"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "alembic==1.20.0",
+    "fastapi==0.143.0",
+    "httpx==0.28.1",
+    "psutil==7.2.2",
+    "psycopg[binary]==3.3.6",
+    "pydantic-settings==2.15.0",
+    "pyjwt[crypto]==2.15.1",
+    "pyyaml==6.0.3",
+    "redis==8.1.0",
+    "sqlalchemy==2.1.4",
+    "uvicorn==0.54.0",
+]
+
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["backend/repoguard"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["repoguard"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = ["postgres: requires a disposable PostgreSQL database", "services: requires Redis/PostgreSQL", "sandbox: requires Docker isolation"]
+
+[dependency-groups]
+dev = [
+    "mypy==2.4.0",
+    "pytest==9.1.1",
+    "pytest-cov==7.1.0",
+    "ruff==0.17.0",
+    "types-psutil==7.2.2.20260906",
+    "types-pyyaml==6.0.12.20260906",
+]

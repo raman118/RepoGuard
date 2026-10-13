@@ -1,0 +1,8 @@
+name: fixture unsafe CI
+on: [push]
+permissions: write-all
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo no tests configured

@@ -1,0 +1,150 @@
+{
+  "schema_version": "evaluation/1",
+  "with_semgrep": true,
+  "measured_at": "2026-10-12T18:48:22.544392+00:00",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.13",
+    "logical_cpus": 16
+  },
+  "method": "warm single-process ZIP + config + score; pinned Semgrep CLI included; no network/DB/queue/worker startup",
+  "sample": {
+    "repositories": 2,
+    "iterations_per_repository": 3,
+    "measured_scans": 6,
+    "compressed_bytes": {
+      "vulnerable": 782,
+      "clean": 819
+    }
+  },
+  "per_rule": {
+    "RG-CI-PERMISSIONS": {
+      "scanned_repositories": 2,
+      "unscanned_repositories": 0,
+      "true_positive_locations": 1,
+      "false_positive_locations": 0,
+      "false_negative_locations": 0,
+      "true_negative_repositories": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "negative_repositories": 1
+    },
+    "RG-PY-SHELL": {
+      "scanned_repositories": 2,
+      "unscanned_repositories": 0,
+      "true_positive_locations": 1,
+      "false_positive_locations": 0,
+      "false_negative_locations": 0,
+      "true_negative_repositories": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "negative_repositories": 1
+    },
+    "RG-CI-TIMEOUT": {
+      "scanned_repositories": 2,
+      "unscanned_repositories": 0,
+      "true_positive_locations": 1,
+      "false_positive_locations": 0,
+      "false_negative_locations": 0,
+      "true_negative_repositories": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "negative_repositories": 1
+    },
+    "RG-DOCKER-ROOT": {
+      "scanned_repositories": 2,
+      "unscanned_repositories": 0,
+      "true_positive_locations": 1,
+      "false_positive_locations": 0,
+      "false_negative_locations": 0,
+      "true_negative_repositories": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "negative_repositories": 1
+    },
+    "RG-DOCKER-TAG": {
+      "scanned_repositories": 2,
+      "unscanned_repositories": 0,
+      "true_positive_locations": 1,
+      "false_positive_locations": 0,
+      "false_negative_locations": 0,
+      "true_negative_repositories": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "negative_repositories": 1
+    },
+    "RG-DEPENDENCY-PIN": {
+      "scanned_repositories": 2,
+      "unscanned_repositories": 0,
+      "true_positive_locations": 1,
+      "false_positive_locations": 0,
+      "false_negative_locations": 0,
+      "true_negative_repositories": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "negative_repositories": 1
+    },
+    "RG-CI-TEST": {
+      "scanned_repositories": 2,
+      "unscanned_repositories": 0,
+      "true_positive_locations": 1,
+      "false_positive_locations": 0,
+      "false_negative_locations": 0,
+      "true_negative_repositories": 1,
+      "precision": 1.0,
+      "recall": 1.0,
+      "false_positive_rate": 0.0,
+      "negative_repositories": 1
+    }
+  },
+  "scores": {
+    "vulnerable": {
+      "sha": "d92e5622c3c2712c0f05df9c20ba5bb073edc51b",
+      "value": 41,
+      "coverage_points": 100.0,
+      "digest": "dcbb3e0a9e46041f0896604feb8807899c9c114b7a9b2ee75a31a7d3ec873e84"
+    },
+    "clean": {
+      "sha": "363fd20b9c4e13d684ef4e39c75efc321d3ac2fa",
+      "value": 100,
+      "coverage_points": 100.0,
+      "digest": "9f1c7f5ca0bcf26c907d26ac7547ec26bb21f34b879ffc1b3219b34c5f42c3ce"
+    }
+  },
+  "determinism": {
+    "vulnerable": {
+      "unique_digests": 1,
+      "deterministic": true
+    },
+    "clean": {
+      "unique_digests": 1,
+      "deterministic": true
+    }
+  },
+  "latency_ms": {
+    "median": 3911.179850001645,
+    "p95": 4588.75954999894,
+    "minimum": 3733.370500005549,
+    "maximum": 4627.449399995385
+  },
+  "sequential_scans_per_second": 0.24523263667098832,
+  "fixes": {
+    "proposed": 2,
+    "statically_resolved": 2,
+    "static_resolution_rate": 1.0,
+    "isolated_validation_attempts": 0,
+    "isolated_validation_success_rate": null,
+    "status": "BLOCKED: Docker/validator unavailable; static resolution is not validated success"
+  },
+  "limitations": [
+    "Two simple fixtures, one positive and one negative repository per config rule; labels and implementation were co-developed.",
+    "No claim of general precision/recall, CVE detection, worker throughput, live GitHub behavior or production latency.",
+    "Semgrep coverage follows actual engine outcomes; unavailable/disabled controls have null accuracy metrics. External service and isolation gates remain blocked."
+  ]
+}

@@ -1,0 +1,65 @@
+name: repoguard-verification
+# Disposable service gates: no published ports, host mounts, daemon access or egress.
+services:
+  postgres:
+    image: postgres:17-alpine@sha256:b0f9560a2de083e2cc7382e75f808c7381a32852a7ec49117deedb300e552b24
+    user: postgres
+    environment:
+      POSTGRES_USER: repoguard_test
+      POSTGRES_DB: repoguard_test
+      POSTGRES_PASSWORD: disposable-local-test-only
+    tmpfs:
+      - /var/lib/postgresql/data:uid=70,gid=70,mode=0700
+      - /var/run/postgresql:uid=70,gid=70,mode=0770
+      - /tmp:mode=1777
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 512m
+    cpus: 1.0
+    pids_limit: 128
+    networks: [test-data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, repoguard_test, -d, repoguard_test]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  redis:
+    image: redis:7-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    user: redis
+    command: [redis-server, --save, '', --appendonly, 'no']
+    tmpfs: [/data:uid=999,gid=999,mode=0700]
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 128m
+    cpus: 0.5
+    pids_limit: 64
+    networks: [test-data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+  checks:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: verification
+    environment:
+      REPOGUARD_VERIFY_OUTPUT: /tmp/verification
+      REPOGUARD_TEST_POSTGRES_URL: postgresql+psycopg://repoguard_test:disposable-local-test-only@postgres:5432/repoguard_test?connect_timeout=5
+      REPOGUARD_TEST_REDIS_URL: redis://redis:6379/0
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    tmpfs: [/tmp:size=256m,mode=1777]
+    mem_limit: 1g
+    cpus: 1.0
+    pids_limit: 128
+    networks: [test-data]
+networks:
+  test-data: {internal: true}

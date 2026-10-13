@@ -1,0 +1,15 @@
+{
+  "version": "fixture-labels/1",
+  "repositories": {
+    "vulnerable": [
+      {"rule_id": "RG-CI-PERMISSIONS", "path": ".github/workflows/ci.yml", "line": 3},
+      {"rule_id": "RG-CI-TIMEOUT", "path": ".github/workflows/ci.yml", "line": 5},
+      {"rule_id": "RG-CI-TEST", "path": ".github/workflows/ci.yml", "line": 1},
+      {"rule_id": "RG-DOCKER-ROOT", "path": "Dockerfile", "line": 1},
+      {"rule_id": "RG-DOCKER-TAG", "path": "Dockerfile", "line": 1},
+      {"rule_id": "RG-DEPENDENCY-PIN", "path": "requirements.txt", "line": 1},
+      {"rule_id": "RG-PY-SHELL", "path": "app.py", "line": 5}
+    ],
+    "clean": []
+  }
+}

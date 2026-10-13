@@ -1,0 +1,11 @@
+# Readiness policy v1
+
+`readiness/1` weights: security 35, reliability 20, deployment 20, dependencies 15, maintainability 10. Total 100. Every category receives `weight * scanned_rules / total_registered_category_rules` available points. No input, parser failure or absent engine is unknown and earns zero for that rule; partial categories display partial, never passing. Conservative rule coverage is a count of supported controls, not code-path or language coverage.
+
+Severity deductions per unique (rule ID, rule version, path, line): critical 25, high 14, medium 7, low 3. Categories floor at zero. Overall score is the floor of the sum of rational earned points, within 0–100. Duplicate findings do not multiply penalties. Per-category weights, available/earned points and each deduction explain the result. All arithmetic uses rational numbers until presentation.
+
+Reproducibility digest is SHA-256 of canonical JSON containing full snapshot SHA, exact rule definitions/versions, policy version, weights/penalties, coverage and deduplicated sorted findings. Object ordering and finding order do not affect score or digest. Rule changes require a version bump; historical result JSON retains definitions. Failed/cancelled scans have no score, rather than a misleading result.
+
+Verified local fixtures with Semgrep absent: vulnerable 37/100, clean 82/100, both 82.5 coverage points; Python shell rule remains unknown. These are deterministic fixture results, not general security assessments. A missing configuration does not mean the repository needs that configuration; it means RepoGuard cannot award that control's points. Public display must include this limitation. No CVE, runtime behavior or test-success claims derive from static analysis.
+
+With verified Semgrep 1.180.0 coverage, expected fixture scores are vulnerable 41/100 and clean 100/100. Coverage grows to 100 weighted points; the added security control contributes 17.5 available points and the vulnerable shell finding deducts 14. The score may rise when previously unknown coverage becomes available even if a new risk is found. Always compare coverage, versions and findings alongside the score. Engine version participates in the digest.

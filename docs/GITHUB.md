@@ -1,0 +1,9 @@
+# GitHub App setup and verification
+
+Create an App with metadata read and contents read for scanning. Remediation requires contents write and pull requests write; the supported workflow-file fixes also require Workflows write. Install only on selected repositories. Scan tokens remain read-only; PR tokens restrict repository_ids and request these writes only at the approved action boundary. No administration/actions/merge permission or user PAT is required. Subscribe to push, installation and installation_repositories. Ignore pull request source execution. [GitHub workflow-file permissions](https://docs.github.com/en/rest/repos/contents#create-or-update-file-contents).
+
+Set `REPOGUARD_GITHUB_APP_ID`, `REPOGUARD_GITHUB_PRIVATE_KEY` (PEM text via secret environment), and random `REPOGUARD_WEBHOOK_SECRET`. Provision installation-to-tenant mapping with operator CLI after ownership verification. Configure `/webhooks/github` over TLS. Raw HMAC validation precedes JSON parsing; delivery UUIDs persist for deduplication. No self-claim installation API exists.
+
+Discovery walks up to 20 pages of 100 repositories. Token cache is bounded and refreshes before expiry; installation events invalidate it. Fixed API host, generated paths, request timeouts and sanitized retryable rate/transport errors are enforced. Worker retry policy handles temporary failures; HTTP API reports unavailable. This initial adapter requires operator retry after a revoked/401 token; installation lifecycle events clear cache.
+
+Local tests use httpx.MockTransport and generated test RSA keys. This is real API adapter code with mocked transport, not evidence of live integration. Live App discovery/webhook verification is BLOCKED until credentials and an externally reachable TLS endpoint exist. Never record token values in test evidence.

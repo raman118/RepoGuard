@@ -1,0 +1,10 @@
+name: fixture bounded CI
+on: [push]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: pytest
